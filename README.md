@@ -1,4 +1,6 @@
-# untitled
+# Tugas latihan Mandiri Pertemuan 3 Pemrograman Mobile
+Alfian Khusnul fatoni
+3012410017 / IF5A
 
 A new Flutter project.
 
