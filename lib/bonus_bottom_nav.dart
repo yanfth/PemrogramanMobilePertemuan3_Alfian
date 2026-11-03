@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'latihan1_push_pop.dart';
+import 'latihan2_kirim_data.dart';
+import 'latihan3_named_routes.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -17,9 +20,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   ];
 
   final List<String> _titles = const [
-    'Bonus: Tab Beranda',
-    'Bonus: Tab Cari',
-    'Bonus: Tab Profil',
+    'Beranda Utama',
+    'Pencarian',
+    'Profil Pengguna',
   ];
 
   @override
@@ -81,19 +84,152 @@ class TabBeranda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.home_rounded, size: 72, color: Colors.indigo),
-          SizedBox(height: 12),
-          Text(
-            'Halaman Beranda (Bonus)',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 520),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 36,
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                child: Icon(
+                  Icons.school_rounded,
+                  size: 40,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Menu Tugas Pertemuan 3',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Pilih salah satu latihan di bawah untuk masuk ke halaman baru:',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+
+              // Menu Latihan 1
+              _buildMenuCard(
+                context,
+                title: 'Latihan 1 · Push & Pop',
+                subtitle: 'Navigasi Beranda ke Tentang & Kembali',
+                icon: Icons.swap_horiz_rounded,
+                color: Colors.indigo,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BerandaPage(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 14),
+
+              // Menu Latihan 2
+              _buildMenuCard(
+                context,
+                title: 'Latihan 2 · Kirim Data',
+                subtitle: 'Daftar 3 Produk & Detail Produk',
+                icon: Icons.shopping_bag_rounded,
+                color: Colors.teal,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DaftarProdukPage(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 14),
+
+              // Menu Latihan 3
+              _buildMenuCard(
+                context,
+                title: 'Latihan 3 · Named Routes',
+                subtitle: 'Kirim argumen melalui rute bernama (3 Halaman)',
+                icon: Icons.alt_route_rounded,
+                color: Colors.deepPurple,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HalamanSatu(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-          SizedBox(height: 4),
-          Text('Menggunakan BottomNavigationBar 3 Tab (Beranda, Cari, Profil).'),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuCard(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: color.withAlpha(30),
+                child: Icon(icon, color: color, size: 28),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                size: 26,
+                color: Colors.black38,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
